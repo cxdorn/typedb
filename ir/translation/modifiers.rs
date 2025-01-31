@@ -9,7 +9,7 @@ use std::collections::HashSet;
 use typeql::{query::stage::Operator, token::Order};
 
 use crate::{
-    pipeline::modifier::{Limit, Offset, Require, Select, Sort},
+    pipeline::modifier::{Limit, Offset, Require, Select, Sort, Distinct},
     translation::{literal::FromTypeQLLiteral, TranslationContext},
     RepresentationError,
 };
@@ -92,4 +92,12 @@ pub fn translate_require(
         .collect::<Result<HashSet<_>, _>>()?;
     let require = Require::new(required_variables);
     Ok(require)
+}
+
+pub fn translate_distinct(
+    context: &mut TranslationContext,
+    typeql_distinct: &typeql::query::pipeline::stage::modifier::Distinct,
+) -> Result<Distinct, Box<RepresentationError>> {
+    let distinct = Distinct::new();
+    Ok(distinct)
 }
